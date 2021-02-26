@@ -2,92 +2,148 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import LoginPage from "@/views/LoginPage";
+import routerGuard from "@/service/routerGuard";
+import routerGouardTokennot from "@/service/routerGouardTokennot";
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Dashbord',
-    component: Home,
-    meta: {
-      public: false
-    }
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: LoginPage,
-    meta: {
-      public:true
+    {
+        path: '/',
+        name: 'Dashboard',
+        component: Home,
+        meta: {
+            public: false
+        },
+        beforeEnter: routerGuard
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: LoginPage,
+        meta: {public: true},
+        beforeEnter: routerGouardTokennot
+    },
+    {
+        path: '/loader',
+        name: 'loader',
+        component: () => import('../views/Popup/loader.vue'),
+        meta: {public: false},
+        beforeEnter: routerGuard
+    },
+    {
+        path: '/portal',
+        name: 'portal',
+        component: () => import('../views/portal'),
+        meta: {public: false},
+        beforeEnter: routerGuard
+    },
+    {
+        path: '/mainmenu',
+        name: 'MainMenu',
+        component: () => import('../views/mainmenu/mainmenu.vue'),
+        meta: {
+            public: false
+        },
+        beforeEnter: routerGuard
+
     },
 
-  },
+    {
+        path: '/ToolbarNavbar',
+        name: 'ToolbarNavbar',
+        meta: {
+            public: false
+        },
+        beforeEnter: routerGuard,
+        component: () => import('../components/toolbar_and_navbar/Navgeshndrawerr')
+    },
+    {
+        path: '/Students',
+        name: 'Students',
+        meta: {
+            public: false
+        },
+        beforeEnter: routerGuard,
+        component: () => import('../views/Students/Students.vue')
+    },
 
-  {
-    path: '/ToolbarNavbar',
-    name: 'ToolbarNavbar',
-    meta: {
-      public: false
+    {
+        path: '/Teachers',
+        name: 'Teachers',
+        meta: {public: false},
+        beforeEnter: routerGuard,
+        component: () => import('../views/Teachers/Teachers.vue')
     },
-    component: () => import('../components/toolbar_and_navbar/toolbar_navbar')
-  },
-  {
-    path: '/Students',
-    name: 'Students',
-    meta: {
-      public: false
+    {
+        path: '/Rooms',
+        name: 'Rooms',
+        meta: {
+            public: false
+        },
+        beforeEnter: routerGuard,
+        component: () => import('../views/Rooms/Rooms.vue')
     },
-    component: () => import('../views/Students/Students.vue')
-  },
-
-  {
-    path: '/Teachers',
-    name: 'Teachers',meta: {
-      public: false
+    {
+        path: '/Subjects',
+        name: 'Subjects',
+        meta: {public: false},
+        beforeEnter: routerGuard,
+        component: () => import('../views/Subjects/Subjects.vue')
     },
-    component: () => import('../views/Teachers/Teachers.vue')
-  },
-  {
-    path: '/Rooms',
-    name: 'Rooms',
-    meta: {
-      public: false
+    {
+        path: '/StudentGrups',
+        name: 'StudentGrups',
+        meta: {
+            public: false
+        },
+        beforeEnter: routerGuard,
+        component: () => import('../views/StudentGrups/StudentGrups.vue')
     },
-    component: () => import('../views/Rooms/Rooms.vue')
-  },
-  {
-    path: '/Subjects',
-    name: 'Subjects',
-    meta: {
-      public: false
+    {
+        path: '/TimeTable',
+        name: 'TimeTable',
+        meta: {
+            public: false
+        },
+        beforeEnter: routerGuard,
+        component: () => import('../views/Time Table/TimeTable.vue')
     },
-    component: () => import('../views/Subjects/Subjects.vue')
-  },
-  {
-    path: '/StudentGrups',
-    name: 'StudentGrups',
-    meta: {
-      public: false
+    {
+        path: '/roomsinfo',
+        name: 'Roomsinfo',
+        meta: {
+            public: false
+        },
+        beforeEnter: routerGuard,
+        component: () => import('../components/Popoproomsinfo/DialogRoomsinfo')
     },
-    component: () => import('../views/StudentGrups/StudentGrups.vue')
-  },
-  {
-    path: '/TimeTable',
-    name: 'TimeTable',
-    meta: {
-      public: false
+    {
+        path: '/appbar',
+        name: 'appbar',
+        meta: {
+            public: false
+        },
+        beforeEnter: routerGuard,
+        component: () => import('../components/toolbar_and_navbar/appbar.vue')
     },
-    component: () => import('../views/Time Table/TimeTable.vue')
-  },
+    {
+        path: '*',
+        name: '404',
+        meta: {
+            public: false
+        },
+        beforeEnter: routerGuard,
+        component: () => import('../views/404')
+    },
 
 
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes
 });
 
 

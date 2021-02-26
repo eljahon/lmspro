@@ -1,13 +1,7 @@
 import axios from "axios";
 // import basic from "./requests"
 const SEVER_HOST = "https://lmspro-uz.herokuapp.com/api"
-
-
-const token = false
-
-
-
-function ErrorHandler (error) {
+function ErrorHandler(error) {
     console.log(error)
     if (error.message.startsWith('timeout')) {
         console.log('TimeOut')
@@ -31,19 +25,21 @@ function ErrorHandler (error) {
     }
 }
 
-const init = {
-    request (method, url, params, data) {
-        let config  = {
-            baseURL:SEVER_HOST,
+const request = {
+    request(method, url, params, data, requestConfig = {sendToken: true}) {
+        let config = {
+            baseURL: SEVER_HOST,
             timeout: 10000,
             url: url,
             method: method
         }
-        if (token) {
+        const token = localStorage.getItem("token");
+        if (token && requestConfig.sendToken) {
             config.headers = {
-                Authorization: token
+                Authorization: `Bearer ${token}`
             }
         }
+
         if (data) config.data = data
 
         if (params) config.params = params
@@ -66,18 +62,18 @@ const init = {
         // })
         // return axios(config)
     },
-    get (url, params) {
-        return this.request('GET', url, params, undefined)
+    get(url, params, requestConfig) {
+        return this.request('GET', url, params, undefined, requestConfig)
     },
-    post (url, data, params) {
-        return Promise.resolve(this.request('POST', url, params, data))
+    post(url, data, params, requestConfig) {
+        return this.request('POST', url, params, data, requestConfig)
     },
-    put (url, data, params) {
-        this.request('PUT', url, params, data)
+    put(url, data, params, requestConfig) {
+        this.request('PUT', url, params, data, requestConfig)
     },
-    remove (url, data, params) {
-        this.request('DELETE', url, params, undefined)
+    remove(url, data, params, requestConfig) {
+       return  this.request('DELETE', url, params, undefined, requestConfig)
     },
 }
 
-export default init;
+export default request;

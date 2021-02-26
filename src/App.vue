@@ -1,44 +1,48 @@
 <template>
   <v-app>
     <template v-if="!$route.meta.public">
-      <ToolbarNavbar/>
-    </template>
-    <template v-else>
+
       <div>
 
-        <router-view/>
+        <ToolbarNavbar :drawer="drawer"/>
+          <Appbar/>
+        <portal target="#portal"></portal>
+
       </div>
+
     </template>
+    <template v-else>
+      <LoginPage/>
+    </template>
+
   </v-app>
 </template>
 
 <script>
-import ToolbarNavbar from './components/toolbar_and_navbar/toolbar_navbar'
-import requests from "@/service/requests";
+import ToolbarNavbar from './components/toolbar_and_navbar/Navgeshndrawerr'
+import LoginPage from "@/views/LoginPage";
+import Appbar from './components/toolbar_and_navbar/appbar'
+
 
 
 export default {
-  name: 'App',
+data(){
+  return{
+    drawer:true,
+    lading:true
+  }
+},
   components: {
-    ToolbarNavbar
-
-  },
-
-  data() {
-    return {}
-  },
-  mounted() {
-    requests.get("/account-info")
-        .then(console.log)
-        .catch(err => {
-          if(err.status === 401) {
-            // redirect to login
-          }
-        })
+    ToolbarNavbar,
+    LoginPage,
+   Appbar
   }
 };
 </script>
 <style scoped>
+.popup{
+  position: absolute;
+}
 
 
 </style>
