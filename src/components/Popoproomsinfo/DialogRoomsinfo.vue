@@ -14,7 +14,8 @@
            <v-row>
              <v-col cols="10"> <span>Roomsinfo</span>
                </v-col>
-             <v-col cols="2"><span style="float: left" @click="dialog = false"><v-icon>mdi-close-thick</v-icon></span></v-col>
+             <v-col cols="2"><span style="float: left"
+                                   @click="dialog = false"><v-icon>mdi-close-thick</v-icon></span></v-col>
            </v-row>
           </v-card-title>
           <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
@@ -39,10 +40,9 @@
       </v-dialog>
     </v-row>
   </template>
-
-
-<script>
+  <script>
 export default {
+
   data(){
     return {
       dialog:false

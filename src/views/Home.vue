@@ -1,18 +1,25 @@
 <template>
-<v-app>
-<h1>hellow i home peget</h1>
-</v-app>
+  <Dialog v-if="losder" />
+  <h1 v-else>hellow i is home ........</h1>
 </template>
 
 <script>
-// import ToolbarNavbar from './components/toolbar_and_navbar/toolbar_navbar'
-
+import Dialog from '../components/loadeng/loadeng'
 export default {
-  name: 'app',
-  // comments:{
-  //   ToolbarNavbar
-  //
-  // }
-
+  components:{ Dialog},
+  data:()=>{
+    return {
+      losder:true
+    }
+  },
+  beforeMount() {
+    setTimeout(()=>{
+      this.losder=!this.losder
+    },1000)
+  }
 }
 </script>
+
+<style scoped>
+
+</style>

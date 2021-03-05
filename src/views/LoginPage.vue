@@ -27,6 +27,7 @@
       </v-text-field>
 
       <v-text-field
+          type="password"
 
           color="white"
           v-model="password"
@@ -55,7 +56,7 @@
 
 <script>
 // import requesPost from "@/service/requestPOST";
-import request from "../service/axios_init"
+// import request from "../service/axios_init"
 
 export default {
   name: "LoginPage",
@@ -73,21 +74,16 @@ export default {
   methods: {
 
     userLoginDataSend() {
+
       this.lading = !this.lading
       this.button_click = !this.button_click
-      request.post('/authenticate', {password: this.password, username: this.login}, {sendToken: false})
-          .then(res => {
-            if (res.status === 200 && res.body.token) {
-              const {token, learningCentres} = res.body;
-              console.log(res)
-              localStorage.setItem('learningCentresid', learningCentres[0].id)
-              localStorage.setItem('token', token);
-              let usertoken = {surname: res.body.user.lastName, name: res.body.user.firstName}
-              localStorage.setItem('usertoken', JSON.stringify(usertoken))
-              this.$router.push({name: 'ToolbarNavbar'});
-            }
+      let login = {password: this.password, username: this.login}
+      let sendtoken ={sendToken: false}
+      this.$store.dispatch("authenticate", login, sendtoken)
+          .then(res=>{
+            console.log(res)
+            this.$router.push('/home')
           })
-          .catch(console.log)
           .finally(() => {
             // enable
             this.button_click = !this.button_click;
@@ -101,5 +97,8 @@ export default {
 </script>
 
 <style scoped>
+main{
+  min-height: 0px;
+}
 
 </style>

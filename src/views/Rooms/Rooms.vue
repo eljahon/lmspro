@@ -1,21 +1,41 @@
 <template>
   <!--  <v-main class="main">-->
-
   <v-sheet class="main">
     <portal to="destination">
-      <v-tooltip bottom color="purple accent-1" v-if="por">
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn bottomcolor="purple"
+      <div>
+        <v-row>
+<!--        app-bar inside   search input-->
+          <v-col cols="4" v-if="Search"><v-text-field
+              label="Search"
+              outlined
+              color=""
+              dense
+              v-model="input"
+          ></v-text-field></v-col>
+<!--       app-bar inside filter icon-->
+          <v-col cols="4">
+        <v-tooltip bottom color="purple accent-1" v-if="por">
+          <template v-slot:activator="{ on, attrs }">
+<!--      app-bar inside search function button  -->
+              <v-btn bottomcolor="purple"
                  dark
                  plain
                  v-bind="attrs"
-                 v-on="on">
-            <v-icon>mdi-filter</v-icon>
+                 v-on="on"
+                     @click="search()"
+              >
+            <v-icon>
+              mdi-filter
+            </v-icon>
           </v-btn>
-        </template>
-        <span>filter</span>
+               </template>
+          <span>filter</span>
       </v-tooltip>
+          </v-col>
+<!--          room new create -->
+          <v-col cols="4">
       <v-tooltip bottom color="purple accent-1" v-if="por">
+<!--        app-bar inside room add icon and button-->
         <template v-slot:activator="{ on, attrs }">
           <v-btn bottomcolor="purple"
                  dark
@@ -29,17 +49,23 @@
         </template>
         <span>room add</span>
       </v-tooltip>
+          </v-col>
+        </v-row>
+      </div>
     </portal>
-    <span v-if="loader">Loading ...</span>
+<!--    beformounted loader-->
+    <Dialog v-if="loader"/>
     <v-simple-table dense v-else>
       <template v-slot:default>
-        <thead>
+        <!--        rooms  tabler header-->
+        <thead><br>
         <tr>
           <th>checkbox</th>
           <th class="text-left">
             Avatar
           </th>
           <th>
+<!--            room info icon mdi-down and mdi-up button-->
             <v-btn
                 @click="Adresroom=!Adresroom"
                 plain
@@ -101,8 +127,10 @@
         </tr>
         </thead>
         <tbody>
+<!--        //rooms for item  filter-->
         <tr
-            v-for="(item) in roominfo"
+            v-for="(item,index) in searchfilter
+"
             :key="item.id"
         >
           <td>
@@ -115,7 +143,7 @@
           </td>
           <td>
             <v-list-item-avatar>
-              <img src="../../assets/Acer-Nitro-5-DB-749x800-1591861689.png">
+              <img src="../../assets/classroom_1542034403442_61914801_ver1.0.jpg">
             </v-list-item-avatar>
           </td>
 
@@ -143,9 +171,11 @@
           </td>
           <td>
             <template>
+<!--              room talbe reight icons vertical ... -->
               <div class="text-center">
                 <v-menu offset-y>
                   <template v-slot:activator="{ on, attrs }">
+                    <!-- room talbe reight icons vertical button ... -->
                     <v-btn
                         v-bind="attrs"
                         v-on="on"
@@ -167,7 +197,7 @@
                     </v-list-item>
                     <v-list-item>
                       <v-list-item-title>
-                        <v-btn plain @click="openInfoDialog()">
+                        <v-btn plain @click="openInfoDialog(index, item.id)">
                           <v-icon>mdi-pencil-outline</v-icon>
                         </v-btn>
                       </v-list-item-title>
@@ -185,19 +215,16 @@
                 </v-menu>
               </div>
             </template>
-
-            <PopopRoomsinfo ref="roominfo"/>
-            <Roomsinfoinput ref="room_update"/>
-            <Roomnewadd ref="roomadd"/>
-
-
           </td>
 
         </tr>
         </tbody>
       </template>
     </v-simple-table>
-
+    <PopopRoomsinfo ref="roominfo"/>
+    <Roomsinfoinput ref="room_update"/>
+    <Newaddroom ref="roomadd"/>
+    <TimePicker ref="timepicker"/>
   </v-sheet>
   <!--  </v-main>-->
 </template>
@@ -206,14 +233,16 @@
 
 import PopopRoomsinfo from '../../components/Popoproomsinfo/DialogRoomsinfo'
 import Roomsinfoinput from '../../components/Roomsupdate/InfoRoomsup'
-import server from '../../service/axios_init'
 import {mapGetters, mapActions} from 'vuex'
-import Roomnewadd from '../../components/roomnewadd/roomnewadd'
-
+import Newaddroom from '../../components/roomnewadd/newaddroom'
+import Dialog from '../../components/loadeng/loadeng'
+import  TimePicker from '../../components/timepicker/timepicker'
+// import Search from '../../components/Filterrooms/filterrooms'
 export default {
-  components: { PopopRoomsinfo, Roomsinfoinput, Roomnewadd},
+  components: { PopopRoomsinfo, Roomsinfoinput, Newaddroom, Dialog,TimePicker },
   data() {
     return {
+      Search:false,
       loader: false,
       Adresroom: true,
       personlimt: true,
@@ -222,51 +251,61 @@ export default {
       roomsinput: false,
       person: '',
       Status: true,
-      por: true
+      por: true,
+      input:'',
+      array:[]
     }
   },
   computed: {
     ...mapGetters(["roominfo", "portal"]),
+          searchfilter () {
+          if (this.input === '') return this.roominfo
+          else return this.roominfo.filter(e => {
+          return e.address.toUpperCase().startsWith(this.input.trim().toUpperCase())
+      })
+    }
 
-  },
+    },
+
+
 
   methods: {
-    ...mapActions(['setAccountData', "getRoomList"]),
+    ...mapActions(['setAccountData', "getRoomList",]),
     deletroom(index) {
-      server.remove("/v1/admin/learning-centre/room/" + index)
-          .then((res) => {
-                console.log(res, "ok")
-                this.roomsinfodata();
-
-              }
-          )
-          .catch(err =>
-              console.log(err))
-          .finally(() => console.log("salom"))
+      this.loader=true
+      this.$store.dispatch("deletRoom",index)
+      this.loader=false
     },
-    openInfoDialog() {
-      console.log(this.$refs.room_update[0].show())
+    search(){
+      this.Search=! this.Search;
+
+
+    },
+
+    openInfoDialog(index, id) {
+      this.$refs.room_update.show()
+      this.$refs.room_update.updateRoom(index, id)
     },
     roominfodialog() {
-      this.$refs.roominfo[0].shov()
+
+      this.$refs.roominfo.shov()
     },
     roomsinfodata() {
       this.loader = true;
-      this.getRoomList().finally(() => {
+      this.getRoomList().
+      finally(() => {
         this.loader = false
       })
     },
     roomadd() {
-      this.$refs.roomadd[0].show()
-      console.log("hellow")
+      this.$refs.roomadd.show()
     }
   },
   mounted() {
     this.roomsinfodata();
-    this.setAccountData();
+    // this.setAccountData();
+  },
 
-
-  }
 
 }
 </script>

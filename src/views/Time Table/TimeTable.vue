@@ -1,10 +1,22 @@
 <template>
-<h1>TimeTable</h1>
+  <Dialog v-if="losder" />
+  <h1 v-else>Teachers........</h1>
 </template>
 
 <script>
+import Dialog from '../../components/loadeng/loadeng'
 export default {
-name: "TimeTable"
+  components:{ Dialog},
+  data:()=>{
+    return {
+      losder:true
+    }
+  },
+  beforeMount() {
+    setTimeout(()=>{
+      this.losder=!this.losder
+    },1000)
+  }
 }
 </script>
 

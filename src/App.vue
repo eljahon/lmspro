@@ -1,41 +1,41 @@
 <template>
   <v-app>
-    <template v-if="!$route.meta.public">
+    <Home/>
+<!--    <template v-if="!$route.meta.public">-->
 
-      <div>
 
-        <ToolbarNavbar :drawer="drawer"/>
-          <Appbar/>
-        <portal target="#portal"></portal>
+<!--           <ToolbarNavbar :drawer="drawer"/>-->
+<!--           <Appbar/>-->
+<!--           <portal target="#portal"></portal>-->
+<!--        <v-main>-->
+<!--          <v-container fluid>-->
+<!--            <router-view></router-view>-->
+<!--          </v-container>-->
+<!--        </v-main>-->
 
-      </div>
 
-    </template>
-    <template v-else>
-      <LoginPage/>
-    </template>
+<!--    </template>-->
+<!--    <template v-else>-->
+<!--      <LoginPage/>-->
+<!--    </template>-->
 
   </v-app>
 </template>
 
 <script>
-import ToolbarNavbar from './components/toolbar_and_navbar/Navgeshndrawerr'
-import LoginPage from "@/views/LoginPage";
-import Appbar from './components/toolbar_and_navbar/appbar'
+import Home from './components/Home/home'
+
 
 
 
 export default {
 data(){
   return{
-    drawer:true,
-    lading:true
+
   }
 },
   components: {
-    ToolbarNavbar,
-    LoginPage,
-   Appbar
+    Home
   }
 };
 </script>

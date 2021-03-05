@@ -69,7 +69,7 @@ const request = {
         return this.request('POST', url, params, data, requestConfig)
     },
     put(url, data, params, requestConfig) {
-        this.request('PUT', url, params, data, requestConfig)
+        return this.request('PUT', url, params, data, requestConfig)
     },
     remove(url, data, params, requestConfig) {
        return  this.request('DELETE', url, params, undefined, requestConfig)

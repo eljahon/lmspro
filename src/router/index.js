@@ -119,6 +119,25 @@ const routes = [
         component: () => import('../components/Popoproomsinfo/DialogRoomsinfo')
     },
     {
+        path: '/home',
+        name: 'home',
+        meta: {
+            public: false
+        },
+        beforeEnter: routerGuard,
+        component: () => import('../components/Home/home')
+    },
+    {
+        path: '/loadeng',
+        name: 'loadeng',
+        meta: {
+            public: false
+        },
+        beforeEnter: routerGuard,
+        component: () => import('../components/loadeng/loadeng')
+    },
+
+    {
         path: '/appbar',
         name: 'appbar',
         meta: {

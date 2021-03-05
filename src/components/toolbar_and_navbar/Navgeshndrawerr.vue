@@ -4,7 +4,7 @@
         app :floating="true"
         :mini-variant="navbar_appbar"
         color="deep-purple"
-
+        class="navbar"
     >
       <v-list-item>
         <v-list-item-content>
@@ -49,6 +49,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import request from "@/service/axios_init";
+// import img from '../../assets/subject.png'
 
 
 export default {
@@ -113,14 +114,13 @@ export default {
 
 }
 
-.appbar {
-  justify-content: right;
-  position: relative;
+.navbar{
+  z-index:6!important;
 }
 
 .mainruoter {
   margin-top: 50px;
-  width: 100%;
+  /*width: 100%;*/
 }
 
 </style>
