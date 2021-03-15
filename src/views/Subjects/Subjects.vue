@@ -6,7 +6,7 @@
       <div>
         <v-row>
 
-          <!--       app-bar inside filter icon-->
+
           <v-col cols="4">
             <v-tooltip bottom color="purple accent-1">
               <template v-slot:activator="{ on, attrs }">
@@ -46,85 +46,69 @@
       </div>
     </portal>
     <template>
-      <div>
+      <v-card style="margin-top: 25px;">
+        <v-card-title>
+
+<!--          <v-spacer></v-spacer>-->
+          <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+          ></v-text-field>
+        </v-card-title>
         <v-data-table
             :headers="headers"
-
-            style="background-color: #B3E5FC"
+            :items="subjectlistname"
+            :search="search"
         >
-<!--          <template v-slot:top>-->
-
-<!--          </template>-->
-            <template v-slot:body.append>
-<tr v-for ="(item ,index) in subjectlistname" :key="item.name">
 
 
-  <td><v-checkbox
-
-
-      color="warning"
-      value="warning"
-      hide-details
-  ></v-checkbox></td>
-  <td>
-    <v-avatar><img src="../../assets/Acer-Nitro-5-DB-749x800-1591861689.png" alt="">
-    </v-avatar></td>
-  <td>{{item.name}}</td>
-  <td></td>
-  <td></td>
-  <td>
-    <div class="text-center">
-      <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <!-- room talbe reight icons vertical button ... -->
-          <v-btn
-              v-bind="attrs"
-              v-on="on"
-              max-width="0"
-              max-height="0"
-              style="margin-bottom: 30px"
-          >
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item>
-            <v-list-item-title>
-              <v-btn plain @click="roominfodialog()">
-                <v-icon>mdi-information
-                </v-icon>
-              </v-btn>
-            </v-list-item-title>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-title>
-              <v-btn plain @click="dialogopenupdet(index)">
-                <v-icon>mdi-pencil-outline</v-icon>
-              </v-btn>
-            </v-list-item-title>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-title>
-              <v-btn plain @click="removesubject(item.subjectId)">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-              <h1></h1>
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-
-      </v-menu>
-    </div>
-  </td>
-
-
-</tr>
-
+          <template v-slot:item.chexbox="{ item }">
+            <v-simple-checkbox
+                v-model="item.chexbox"
+                disabled
+            ></v-simple-checkbox>
           </template>
+          <template v-slot:item.Actions="{ item }">
+            <v-icon
+                 color="deep-purple"
+                class="mr-2"
+                @click="editItem(item.subjectId)"
+            >
+              mdi-pencil
+            </v-icon>
+            <v-icon
+               color="purple"
+                @click="deleteItem(item.subjectId)"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
+          <template v-slot:no-data>
+            <v-btn
+                color="primary"
 
+            >
+              Reset
+            </v-btn>
+          </template>
+          <template v-slot:item.subjectId="{ item }">
+            <v-chip v-model="item.subjectId"  color="red" >
+   100%
+            </v-chip>
+            </template>
+
+          <template v-slot:item.text="{ item }">
+            <v-chip v-model="item.text"  color="purple accent-4" >
+              subjects
+            </v-chip>
+          </template>
         </v-data-table>
-      </div>
+      </v-card>
     </template>
+
 
 <Subjectdialog ref="title" />
     <Updatesubject ref="updetcomponents" />
@@ -144,38 +128,54 @@ export default {
       search: '',
       calories: '',
       losder: true,
+      headers: [
+        {
+          text: 'chexbox',
+          align: 'start',
+          sortable: false,
+          value: 'chexbox',
+        },
+        { text: 'Calories', value: 'name' },
+        { text: 'subjectId', value: 'subjectId' },
+        { text:"text", value: 'text' },
+        { text: "", value: 'protein' },
+        { text: 'Ations', value: 'Actions' },
+      ],
 
     }
   },
   computed: {
     ...mapGetters(["subjectlistname"]),
-    headers() {
-      return [
-        {
-          text: ' chexbox',
-          align: 'start',
-          sortable: false,
-          value: 'calories',
-
-        },
-        {
-          text: 'Subject name',
-          value: 'name',
-          filter: value => {
-            if (!this.calories) return true
-
-            return value < parseInt(this.calories)
-          },
-        },
-        {text: 'Protein (g)', value: 'protein'},
-        {text: 'subject analysis', value: 'iron'},
-        {text:""},
-        {text:'Subject name'}
-      ]
-    },
+    // headers() {
+    //   return [
+    //     {
+    //       text: ' chexbox',
+    //       align: 'start',
+    //       sortable: false,
+    //       value: 'calories',
+    //
+    //     },
+    //     {
+    //       text: 'Subject name',
+    //       value: 'name',
+    //       filter: value => {
+    //         if (!this.calories) return true
+    //
+    //         return value < parseInt(this.calories)
+    //       },
+    //     },
+    //     {text: 'Protein (g)', value: 'protein'},
+    //     {text: 'subject analysis', value: 'iron'},
+    //     {text:""},
+    //     {text:'Subject name'}
+    //   ]
+    // },
 
   },
   methods: {
+    editItem(id){
+      console.log(id)
+    },
     filterOnlyCapsText(value, search, ) {
       return value != null &&
           search != null &&
@@ -183,7 +183,7 @@ export default {
           value.toString().toLocaleLowerCase().indexOf(search) !== -1
     },
     ...mapActions(["getSubjectList"]),
-    removesubject(id){
+    deleteItem(id){
       this.losder=!this.losder
       console.log(id);
       this.$store.dispatch("removeSubject",id)

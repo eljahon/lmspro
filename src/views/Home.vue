@@ -1,6 +1,10 @@
 <template>
-  <Dialog v-if="losder" />
-  <h1 v-else>hellow i is home ........</h1>
+ 
+  <v-app>
+    <Dialog v-if="losder" />
+    <img src="../assets/purple-hori-light.png" alt="">
+  </v-app>
+  
 </template>
 
 <script>

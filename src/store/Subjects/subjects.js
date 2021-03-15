@@ -3,7 +3,7 @@ import login from "@/store/Login/login";
 
 export default {
     state: {
-        subjectslist:{}
+        subjectslist:[]
     },
     getters: {
         subjectlistname: state => state.subjectslist,
@@ -12,8 +12,6 @@ export default {
     mutations: {
 
         SUBJECTLIST(state, payload) {
-
-
             state.subjectslist = payload;
         }
     },

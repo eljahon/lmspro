@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <v-app-bar :clipped-left="false" app color="deep-purple" dark class="appbar">
+    <v-app-bar :clipped-left="false" app color="purple darken-1" dark class="appbar">
       <v-btn @click="toggleDrawer" plain>      <v-icon >
         {{ navbar_appbar ? "mdi-format-indent-increase" : "mdi-format-indent-decrease" }}
       </v-icon>
@@ -18,19 +18,22 @@
 
         <div class="portal">
           <portal-target name="destination"></portal-target>
-        <portal-target name="subjects"></portal-target>
+         <portal-target name="subjects"></portal-target>
           <portal-target name="student"></portal-target>
+          <portal-target name="Teachers"></portal-target>
         </div>
 
         <template>
           <div class="text-center">
             <v-menu offset-y>
+
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
                     color="#651FFF"
                     dark
                     v-bind="attrs"
                     v-on="on"
+                    @click="useropenicon=!useropenicon"
                 >{{ surname }}:{{ username }}
                   <v-icon @click="useropenicon= ! useropenicon">
                     {{ useropenicon ? 'mdi-menu-down' : 'mdi-menu-up' }}
@@ -90,7 +93,7 @@ export default {
       salom: true,
       username: JSON.parse(localStorage.getItem('usertoken')).name,
       surname: JSON.parse(localStorage.getItem('usertoken')).surname,
-      useropenicon: true,
+      useropenicon:true,
       overflow: [
           {title: 'Logout', icon: 'mdi-arrow-right-bold'},
           {title:"Setting",icon:'mdi-wrench'},
