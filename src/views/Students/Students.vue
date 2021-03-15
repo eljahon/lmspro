@@ -7,11 +7,10 @@
         <div>
           <v-row>
 
-            <!--       app-bar inside filter icon-->
-            <v-col cols="4">
+            <v-col cols="3">
               <v-tooltip bottom color="purple accent-1">
                 <template v-slot:activator="{ on, attrs }">
-                  <!--      app-bar inside search function button  -->
+
                   <v-btn bottomcolor="purple"
                          dark
                          plain
@@ -19,14 +18,14 @@
                          v-on="on"
 
                   >
-                    <v-icon>mdi-bell-alert-outline</v-icon>
+                    <v-icon @click="search=!search">mdi-account-search</v-icon>
                   </v-btn>
                 </template>
-                <span>Notifications</span>
+                <span>filter</span>
               </v-tooltip>
             </v-col>
-            <!--          room new create -->
-            <v-col cols="4">
+
+            <v-col cols="3">
               <v-tooltip bottom color="purple accent-1">
                 <!--        app-bar inside room add icon and button-->
                 <template v-slot:activator="{ on, attrs }">
@@ -40,18 +39,50 @@
                     <v-icon>mdi-account-plus</v-icon>
                   </v-btn>
                 </template>
-                <span>subjects add</span>
+                <span>sutudent  add</span>
+              </v-tooltip>
+            </v-col>
+
+            <v-col cols="3">
+              <v-tooltip bottom color="purple accent-1">
+                <template v-slot:activator="{ on, attrs }">
+                  <!--      app-bar inside search function button  -->
+                  <v-btn bottomcolor="purple"
+                         dark
+                         plain
+                         v-bind="attrs"
+                         v-on="on"
+
+
+                  >
+                    <v-icon>mdi-bell-alert-outline</v-icon>
+                  </v-btn>
+                </template>
+                <span>Notifications</span>
               </v-tooltip>
             </v-col>
           </v-row>
         </div>
       </portal>
-<!--      v-else-->
+      <v-text-field
+                    style="position: absolute;
+                    top: -40px;width: 100%"
+                    v-if="search"
+                    label="search"
+
+                    filled
+                    outlined
+                    dense
+                    v-model="input"
+      ></v-text-field>
+
 
       <v-simple-table dense >
         <template v-slot:default>
+
           <thead>
           <tr>
+            <th>checkbox</th>
             <th class="text-left">
               Avatar
             </th>
@@ -81,9 +112,19 @@
           </thead>
           <tbody>
           <tr
-              v-for="(item,index) in studentinfo"
-              :key="index"
+              v-for="item in searchfilter"
+              :key="item.id"
           >
+<!--            students inside chexbox -->
+            <td>
+              <v-checkbox
+
+
+                  color="success"
+                  value="success"
+                  hide-details
+              ></v-checkbox>
+            </td>
             <td>
               <v-list-item-avatar>
                 <img src="../../assets/Acer-Nitro-5-DB-749x800-1591861689.png">
@@ -92,24 +133,36 @@
             <td>{{ item.firstName }}</td>
             <td>{{ item.lastName }}</td>
             <td>{{ item.username }}</td>
-            <td>{{ item.subjects }}</td>
+
+            <td><div v-for="i in item.subjects " :key="i.subjectId">
+              <div style="color:#AB47BC">{{i.subjectId}}.{{i.name}}</div>
+            </div>
+            </td>
             <td>
               <v-chip
                   class="ma-2"
                   color="red"
                   text-color="white"
               >
-                {{ item.Status }}
+100%
               </v-chip>
             </td>
-            <td>{{ item.Resault }}</td>
+            <td>
+              <v-chip
+                class="ma-2"
+                color="purple darken-4"
+                text-color="white"
+            >
+              hellow i is student
+            </v-chip>
+            </td>
             <td>
               <template>
-                <!--              room talbe reight icons vertical ... -->
+
                 <div class="text-center">
                   <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
-                      <!-- room talbe reight icons vertical button ... -->
+
                       <v-btn
                           v-bind="attrs"
                           v-on="on"
@@ -138,7 +191,7 @@
                       </v-list-item>
                       <v-list-item>
                         <v-list-item-title>
-                          <v-btn plain @click="deletroom(item.id)">
+                          <v-btn plain @click="deletstudent(item.id)">
                             <v-icon>mdi-delete</v-icon>
                           </v-btn>
                           <h1></h1>
@@ -155,7 +208,7 @@
           </tbody>
         </template>
       </v-simple-table>
-      <newstudentadd ref="studenaddcomponents"></newstudentadd>
+      <Newstudentadd ref="studenaddcomponents"></Newstudentadd>
 
     </v-sheet>
   </v-app>
@@ -163,60 +216,20 @@
 
 <script>
 import  Dialog from '../../components/loadeng/loadeng'
-import newstudentadd from '../../components/Studentcomponents/newstudentadddialog'
+import Newstudentadd from '../../components/Studentcomponents/newstudentadddialog'
 import  {mapActions,mapGetters} from 'vuex'
 
 export default {
   name: "Students",
-  components:{ Dialog ,newstudentadd },
+  components:{ Dialog ,Newstudentadd },
   data() {
     return {
-      loader:true,
-      desserts: [
-        {
-          key:1,
-          Avatarimg: 'Frozen Yogurt',
-          Firstname: 'Eljahon',
-          lastname: 'sdfgh',
-          Username: 'oybek',
-          Subjcts: 'fanalr',
-          Status: "100%",
-          Resault: 'salom',
-          Actions: 'salom'
-        },
-        {
-          key:2,
-          Avatar: 'Frozen Yogurt',
-          Firstname: 'Eljahon',
-          lastname: 'sdfgh',
-          Username: 'oybek',
-          Subjcts: 'fanalr',
-          Status: "100%",
-          Resault: 'salom',
-          Actions: 'salom'
-        },
-        {key:3,
-          Avatar: 'Frozen Yogurt',
-          Firstname: 'Eljahon',
-          lastname: 'sdfgh',
-          Username: 'oybek',
-          Subjcts: 'fanalr',
-          Status: "100%",
-          Resault: 'salom',
-          Actions: 'salom'
-        },
-        {key:4,
-          Avatar: 'Frozen Yogurt',
-          Firstname: 'Eljahon',
-          lastname: 'sdfgh',
-          Username: 'oybek',
-          Subjcts: 'fanalr',
-          Status: "100%",
-          Resault: 'salom',
-          Actions: 'salom'
-        },
-      ],
+      search:false,
+      input: '',
+      loader: true,
+      couter:0
     }
+
   },
   methods:{
     ...mapActions(["getStudentList"]),
@@ -227,7 +240,17 @@ export default {
     dialogopen(){
       this.$refs.studenaddcomponents.opendialog()
 
+
     },
+    deletstudent(index){
+      this.loader=!this.loader
+      this.$store.dispatch("tremoveStudent",index)
+      .finally(()=>{
+        this.loader=!this.loader
+      })
+
+      console.log(index)
+    }
 
   },
   mounted() {
@@ -236,7 +259,12 @@ export default {
 
   },
   computed:{
-...mapGetters(["studentinfo"])
+...mapGetters(["studentinfo"]),
+    searchfilter () {
+      if (this.input === '') return this.studentinfo
+      else return this.studentinfo.filter(e => {
+        return e.firstName.toUpperCase().startsWith(this.input.trim().toUpperCase())
+      })}
 
 
   },

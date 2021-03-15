@@ -1,8 +1,8 @@
 <template>
 
-
+<v-app class="applogin">
   <v-card
-      class="overflow-hidden"
+      class="overflow-hidden card"
       color="purple lighten-1 blue"
       dark
       style="width: 450px;margin: auto"
@@ -10,10 +10,10 @@
       :loading="lading"
 
   >
-    <v-toolbar flat color="purple"
+    <v-toolbar flat color=""
     >
-      <v-icon>mdi-account</v-icon>
-      <v-toolbar-title class="font-weight-light">
+      <v-icon size="50px">mdi-account</v-icon>
+      <v-toolbar-title class="font-weight-light ml-16">
         Admin panel
       </v-toolbar-title>
 
@@ -22,13 +22,20 @@
 
     <v-card-text>
 
-      <v-text-field color="white"
-                    v-model="login" placeholder="user...">
+      <v-text-field
+          outlined
+          label="login"
+          color="white"
+          v-model="login"
+          placeholder="user..."
+      >
       </v-text-field>
 
       <v-text-field
+          label="password"
           type="password"
-
+          autofocus="true"
+           outlined
           color="white"
           v-model="password"
           placeholder="password.."
@@ -50,6 +57,7 @@
     </v-card-actions>
 
   </v-card>
+</v-app>
 
 
 </template>
@@ -100,5 +108,16 @@ export default {
 main{
   min-height: 0px;
 }
+.applogin{
+background-image: url("../assets/image-440.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+  /*.card{*/
+  /*  background-image: url("../assets/image-440.jpg");*/
+  /*  background-size: cover;*/
+  /*  background-repeat: no-repeat;*/
+
+  /*}*/
 
 </style>

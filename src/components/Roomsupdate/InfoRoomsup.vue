@@ -53,7 +53,7 @@
               >
                 <v-text-field
                     label="Legal middle name"
-                    hint="example of helper text only on focus"
+                    hint="Tjum se hei piar Sokhib"
                     outlined
                 ></v-text-field>
               </v-col>

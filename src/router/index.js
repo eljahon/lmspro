@@ -39,8 +39,8 @@ const routes = [
         beforeEnter: routerGuard
     },
     {
-        path: '/mainmenu',
-        name: 'MainMenu',
+        path: '/question',
+        name: 'question',
         component: () => import('../views/mainmenu/mainmenu.vue'),
         meta: {
             public: false

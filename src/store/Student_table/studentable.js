@@ -33,6 +33,47 @@ export  default {
                         reject();
                       })
             })
-        }
+        },
+        createStudent({dispatch},payload){
+            return new Promise((resolve, reject) => {
+                server.post("/v1/admin/learning-centre/student",payload)
+                    .then(res=>{
+                        console.log(res);
+                        resolve();
+                        dispatch("getStudentList")
+                    })
+                    .catch(err=>{
+                        console.log(err)
+                        reject();
+                    })
+            })
+        },
+        removeStudent({dispatch},payload){
+            return new Promise((resolve, reject) => {
+                server.remove("/v1/admin/learning-centre/student/"+payload)
+                    .then(res=>{
+                        console.log(res)
+                        resolve();
+                        dispatch("getStudentList");
+                       })
+                    .catch(err=>{
+                        console.log(err);
+                        reject();
+                    })
+            })
+        },
+        // updateStudent({dispatch},payload){
+        //     return new Promise((resolve, reject) => {
+        //         server.put("")
+        //             .then(res=>{
+        //                   console.log(res);
+        //                   resolve();
+        //                })
+        //             .catch(err=>{
+        //                 console.log(err);
+        //                 reject();
+        //             })
+        //     })
+        // }
     }
 }
