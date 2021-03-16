@@ -36,7 +36,6 @@
               v-model="search"
               append-icon="mdi-magnify"
               label="Search"
-
               hide-details
           ></v-text-field>
         </v-card-title>

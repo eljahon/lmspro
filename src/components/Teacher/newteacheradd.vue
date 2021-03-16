@@ -3,7 +3,7 @@
     <v-dialog v-model="dialog" persistent max-width="690">
 
       <v-card color="deep-orange lighten-5">
-        <v-card-title class="headline">new Teacher add</v-card-title>
+        <v-card-title class="headline ">new Teacher add</v-card-title>
         <v-card-text>
           <v-row>
             <v-col cols="1"></v-col>
@@ -46,237 +46,123 @@
               ></v-text-field>
             </v-col>
 
-            <v-col cols="1"></v-col>
-            <v-col cols="4">
-              <!--              begin lesson data day -->
-              <template>
-                <v-container fluid>
-                  <!--                  select input -->
-                  <v-row align="center">
-                    <v-select
-                        v-model="select"
-                        :hint="`${select.state}`"
-                        :items="beginday"
-                        item-text="state"
-                        item-value=""
-                        label="beginDay"
-                        persistent-hint
-                        return-object
-                        outlined
-                        :dense="true"
 
-                    ></v-select>
+<!--            <v-col cols="1"></v-col>-->
+<!--            <v-col cols="4">-->
+<!--              &lt;!&ndash;              begin lesson data day &ndash;&gt;-->
+<!--              <template>-->
+<!--                <v-container fluid>-->
+<!--                  &lt;!&ndash;                  select input &ndash;&gt;-->
+<!--                  <v-row align="center">-->
+<!--                    <v-select-->
+<!--                        v-model="select"-->
+<!--                        :hint="`${select.state}`"-->
+<!--                        :items="beginday"-->
+<!--                        item-text="state"-->
+<!--                        item-value=""-->
+<!--                        label="beginDay"-->
+<!--                        persistent-hint-->
+<!--                        return-object-->
+<!--                        outlined-->
+<!--                        :dense="true"-->
 
-                  </v-row>
-                </v-container>
-              </template>
-            </v-col>
+<!--                    ></v-select>-->
+
+<!--                  </v-row>-->
+<!--                </v-container>-->
+<!--              </template>-->
+<!--            </v-col>-->
             <!--            begin lesson hour-->
-            <v-col cols="4">
-            <template >
-              <v-row>
+<!--            <v-col cols="4">-->
+<!--            <template >-->
+<!--              <v-row>-->
 
-                  <v-menu
-                      ref="menu"
-                      v-model="menu2"
-                      :close-on-content-click="false"
-                      :nudge-right="40"
-                      :return-value.sync="time"
-                      transition="scale-transition"
-                      offset-y
-                      max-width="290px"
-                      min-width="290px"
-                  >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-text-field
-                          v-model="time"
-                          label="beginHour"
-                          readonly
-                          style="position: relative;top:13px;"
-                          outlined
-                          dense
-                          v-bind="attrs"
-                          v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-time-picker
-                        v-if="menu2"
-                        v-model="time"
-                        full-width
-                        @click:minute="$refs.menu.save(time)"
-                    ></v-time-picker>
-                  </v-menu>
+<!--                  <v-menu-->
+<!--                      ref="menu"-->
+<!--                      v-model="menu2"-->
+<!--                      :close-on-content-click="false"-->
+<!--                      :nudge-right="40"-->
+<!--                      :return-value.sync="time"-->
+<!--                      transition="scale-transition"-->
+<!--                      offset-y-->
+<!--                      max-width="290px"-->
+<!--                      min-width="290px"-->
+<!--                  >-->
+<!--                    <template v-slot:activator="{ on, attrs }">-->
+<!--                      <v-text-field-->
+<!--                          v-model="time"-->
+<!--                          label="beginHour"-->
+<!--                          readonly-->
+<!--                          style="position: relative;top:13px;"-->
+<!--                          outlined-->
+<!--                          dense-->
+<!--                          v-bind="attrs"-->
+<!--                          v-on="on"-->
+<!--                      ></v-text-field>-->
+<!--                    </template>-->
+<!--                    <v-time-picker-->
+<!--                        v-if="menu2"-->
+<!--                        v-model="time"-->
+<!--                        full-width-->
+<!--                        @click:minute="$refs.menu.save(time)"-->
+<!--                    ></v-time-picker>-->
+<!--                  </v-menu>-->
 
-                <v-spacer></v-spacer>
+<!--                <v-spacer></v-spacer>-->
 
-              </v-row>
-            </template>
-            </v-col>
-            <v-col cols="4">
-              <template>
-
-
-                  <v-dialog
-                      ref="dialog"
-                      v-model="modal2"
-                      :return-value.sync="time"
-                      persistent
-                      width="290px"
-                  >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-text-field
-                          v-model="time"
-                          label="beginMinute"
-                          dense
-                          readonly
-                          outlined
-                          v-bind="attrs"
-                          v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-time-picker
-                        v-if="modal2"
-                        v-model="time"
-                        full-width
-
-                    >
-                      <v-spacer></v-spacer>
-                      <v-btn
-                          text
-                          color="primary"
-                          @click="modal2 = false"
-                      >
-                        Cancel
-                      </v-btn>
-                      <v-btn
-                          text
-                          color="primary"
-                          @click="$refs.dialog.save(time)"
-                      >
-                        OK
-                      </v-btn>
-                    </v-time-picker>
-                  </v-dialog>
-
-              </template>
-
-            </v-col>
-
-<!--
-                     finish lesson day-->
-            <v-col cols="4">
-              <template>
-                <v-container fluid>
-                  <!--               finishlesson     select input -->
-                  <v-row align="center">
-                    <v-select
-                        v-model="finishselect"
-
-                        :items="finishday"
-                        item-text="state"
-                        :hint="`${finishselect.state}`"
-                        item-value=""
-                        label="FinishDay"
-                        outlined
-                        persistent-hint
-                        :dense="true"
-                        return-object
-
-                    ></v-select>
-                  </v-row>
-                </v-container>
-              </template>
-            </v-col>
-
-            <v-col cols="4">
-              <template >
-                <v-row>
-
-                  <v-menu
-                      ref="menu"
-                      v-model="menu2"
-                      :close-on-content-click="false"
-                      :nudge-right="40"
-                      :return-value.sync="time"
-                      transition="scale-transition"
-                      offset-y
-                      max-width="290px"
-                      min-width="290px"
-                  >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-text-field
-                          v-model="time"
-                          label="beginHour"
-                          readonly
-                          outlined
-                          style="position: relative;top:13px;"
-                          dense
-                          v-bind="attrs"
-                          v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-time-picker
-                        v-if="menu2"
-                        v-model="time"
-                        full-width
-                        @click:minute="$refs.menu.save(time)"
-                    ></v-time-picker>
-                  </v-menu>
-
-                  <v-spacer></v-spacer>
-
-                </v-row>
-              </template>
-            </v-col>
-            <v-col cols="4">
-              <template>
+<!--              </v-row>-->
+<!--            </template>-->
+<!--            </v-col>-->
+<!--            <v-col cols="4">-->
+<!--              <template>-->
 
 
-                <v-dialog
-                    ref="dialog"
-                    v-model="modal2"
-                    :return-value.sync="time"
-                    persistent
-                    width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                        v-model="time"
-                        label="beginMinute"
-                        dense
-                        readonly
-                        outlined
-                        v-bind="attrs"
-                        v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-time-picker
-                      v-if="modal2"
-                      v-model="time"
-                      full-width
+<!--                  <v-dialog-->
+<!--                      ref="dialog"-->
+<!--                      v-model="modal2"-->
+<!--                      :return-value.sync="time"-->
+<!--                      persistent-->
+<!--                      width="290px"-->
+<!--                  >-->
+<!--                    <template v-slot:activator="{ on, attrs }">-->
+<!--                      <v-text-field-->
+<!--                          v-model="time"-->
+<!--                          label="beginMinute"-->
+<!--                          dense-->
+<!--                          readonly-->
+<!--                          outlined-->
+<!--                          v-bind="attrs"-->
+<!--                          v-on="on"-->
+<!--                      ></v-text-field>-->
+<!--                    </template>-->
+<!--                    <v-time-picker-->
+<!--                        v-if="modal2"-->
+<!--                        v-model="time"-->
+<!--                        full-width-->
 
-                  >
-                    <v-spacer></v-spacer>
-                    <v-btn
-                        text
-                        color="primary"
-                        @click="modal2 = false"
-                    >
-                      Cancel
-                    </v-btn>
-                    <v-btn
-                        text
-                        color="primary"
-                        @click="$refs.dialog.save(time)"
-                    >
-                      OK
-                    </v-btn>
-                  </v-time-picker>
-                </v-dialog>
+<!--                    >-->
+<!--                      <v-spacer></v-spacer>-->
+<!--                      <v-btn-->
+<!--                          text-->
+<!--                          color="primary"-->
+<!--                          @click="modal2 = false"-->
+<!--                      >-->
+<!--                        Cancel-->
+<!--                      </v-btn>-->
+<!--                      <v-btn-->
+<!--                          text-->
+<!--                          color="primary"-->
+<!--                          @click="$refs.dialog.save(time)"-->
+<!--                      >-->
+<!--                        OK-->
+<!--                      </v-btn>-->
+<!--                    </v-time-picker>-->
+<!--                  </v-dialog>-->
 
-              </template>
+<!--              </template>-->
 
-            </v-col>
+<!--            </v-col>-->
+
 
           </v-row>
         </v-card-text>

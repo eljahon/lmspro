@@ -1,4 +1,6 @@
 <template>
+  <v-app>
+    <Dialog v-if="loading" />
   <v-row justify="center">
     <v-dialog
         v-model="open"
@@ -118,8 +120,7 @@
                         v-model="subjectselect"
                         :items="subjectlistname()"
                         item-text="name"
-                        item-value="item.id"
-
+                        item-value="subjectId"
                         dense
                         outlined
                         label="Subject"
@@ -131,7 +132,7 @@
                         v-model="level"
                         :items="Level"
                         item-text="state"
-                        item-value="state"
+                        item-value="id"
                         dense
                         outlined
                         label="Level"
@@ -327,13 +328,18 @@
 
     </v-dialog>
   </v-row>
+  </v-app>
 
 </template>
 
 <script>
 
 import  {mapGetters} from 'vuex'
+import Dialog from '../../components/loadeng/loadeng'
 export default {
+  components:{
+    Dialog
+  },
   data() {
     return {
       comment: '',
@@ -355,6 +361,7 @@ export default {
       number: '',
       open: false,
       loader: false,
+      loading:false,
       finishselectday: "",
       beginday: [{state: "MONDAY"}, {state: "TUESDAY"}, {state: "WEDNESDAY"},
         {state: "THURSDAY"}, {state: "FRIDAY"}, {state: "SATURDAY"}, {state: "SUNDAY"}],
@@ -366,11 +373,10 @@ export default {
         {state: "Biologiya"},
         {state: "Ingliz tili"},
         {state: "Tarix"},
-        {state: "Fizika"},
-      ],
+        {state: "Fizika"}],
       Level: [
-        {state: "Beginner"},
-        {state: "Advanced"},
+        {state: "Beginner",id:1},
+        {state: "Advanced",id:2},
 
       ]
 
@@ -379,6 +385,7 @@ export default {
   methods: {
     ...mapGetters(["subjectlistname"]),
     studentcreate() {
+      this.loading=!this.loading
       let time = this.begintime.split(":", 2);
       let fintime = this.finishtime.split(":", 2);
 
@@ -401,18 +408,20 @@ export default {
           finishHour: parseInt(fintime[0]),
           finishMinute: parseInt(fintime[1])
         }],
-        subjects: [{
 
-          mandatory:true,
-          name:this.subjectselect.state,
-
-        }],
         subjectsWithLevel: [{
-          comment: this.comment
+          subjectId:this.subjectselect,
+          levelId:this.level  ,
+          comment: this.comment,
+          disabled:true
         }],
         username: this.login
       }
       this.$store.dispatch("createStudent", student)
+      .finally(()=>{
+        this.loading=!this.loading;
+        this.open=!this.open;
+      })
 
     },
     clear() {
@@ -456,7 +465,9 @@ export default {
     }
   },
   updated() {
-    console.log(this.subjectlistname())
+    console.log(this.subjectlistname());
+    console.log(this.subjectselect)
+    console.log(this.level)
   }
 
 

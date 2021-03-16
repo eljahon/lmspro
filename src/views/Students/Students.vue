@@ -184,7 +184,7 @@
                       </v-list-item>
                       <v-list-item>
                         <v-list-item-title>
-                          <v-btn plain @click="openInfoDialog()">
+                          <v-btn plain @click="updatestudent(item.id)">
                             <v-icon>mdi-pencil-outline</v-icon>
                           </v-btn>
                         </v-list-item-title>
@@ -209,6 +209,7 @@
         </template>
       </v-simple-table>
       <Newstudentadd ref="studenaddcomponents"></Newstudentadd>
+      <Updatestudent ref="updatestudent"/>
 
     </v-sheet>
   </v-app>
@@ -218,10 +219,11 @@
 import  Dialog from '../../components/loadeng/loadeng'
 import Newstudentadd from '../../components/Studentcomponents/newstudentadddialog'
 import  {mapActions,mapGetters} from 'vuex'
+import Updatestudent from '../../components/Studentcomponents/updatestudent'
 
 export default {
   name: "Students",
-  components:{ Dialog ,Newstudentadd },
+  components:{ Dialog ,Newstudentadd ,Updatestudent},
   data() {
     return {
       search:false,
@@ -243,13 +245,19 @@ export default {
 
     },
     deletstudent(index){
+      console.log(index)
+
       this.loader=!this.loader
-      this.$store.dispatch("tremoveStudent",index)
+      this.$store.dispatch("removeStudent",index)
       .finally(()=>{
         this.loader=!this.loader
       })
 
       console.log(index)
+    },
+    updatestudent(index){
+      console.log(index)
+      this.$refs.updatestudent.opendialog(index)
     }
 
   },
@@ -274,7 +282,7 @@ export default {
     }, 2000)
   },
   updated() {
-    // console.log(this.studentinfo)
+    console.log(this.studentinfo)
   }
 
 }
