@@ -2,8 +2,7 @@
  
   <v-app>
     <Dialog v-if="losder" />
-    <img src="../assets/purple-hori-light.png" alt="">
-  </v-app>
+    </v-app>
   
 </template>
 

@@ -234,7 +234,7 @@ export default {
 
   },
   methods:{
-    ...mapActions(["getStudentList"]),
+    ...mapActions(["getStudentList","getSubjectList"]),
 
     LoaderOpenClose(){
       this.loader=!this.loader
@@ -263,8 +263,7 @@ export default {
   },
   mounted() {
     this.getStudentList();
-
-
+    this.getSubjectList();
   },
   computed:{
 ...mapGetters(["studentinfo"]),
@@ -282,7 +281,7 @@ export default {
     }, 2000)
   },
   updated() {
-    console.log(this.studentinfo)
+
   }
 
 }

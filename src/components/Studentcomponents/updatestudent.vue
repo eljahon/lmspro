@@ -118,7 +118,7 @@
                     <v-col cols="6">
                       <v-select
                           v-model="subjectselect"
-                          :items="subjectlistname()"
+                          :items="subjectlistname"
                           item-text="name"
                           item-value="subjectId"
                           dense
@@ -383,7 +383,7 @@ export default {
     }
   },
   methods: {
-    ...mapGetters(["studentinfo"]),
+
     studentcreate() {
       this.loading=!this.loading
       let time = this.begintime.split(":", 2);
@@ -447,6 +447,7 @@ export default {
     },
     opendialog(index) {
       this.open = true;
+      console.log(index)
       this.firstname=this.studentinfo[index].firstName;
       this.lastname=this.studentinfo[index].lastName;
 
@@ -460,7 +461,9 @@ export default {
 
 
   },
-  computed: {},
+  computed: {
+    ...mapGetters(["studentinfo",'subjectlistname']),
+  },
   watch: {
     begintime(val) {
       let res = val.split(":", 2);
@@ -468,9 +471,10 @@ export default {
     }
   },
   updated() {
-    console.log(this.subjectlistname());
-    console.log(this.subjectselect)
-    console.log(this.level)
+    // console.log(this.studentinfo[0])
+    // console.log(this.subjectlistname);
+    // console.log(this.subjectselect)
+    // console.log(this.level)
   }
 
 

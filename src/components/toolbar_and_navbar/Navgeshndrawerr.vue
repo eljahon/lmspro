@@ -5,6 +5,8 @@
         :mini-variant="navbar_appbar"
         color="purple darken-1"
         class="navbar"
+       :permanent="true"
+
     >
       <v-list-item>
         <v-list-item-content>

@@ -1,10 +1,12 @@
 <template>
 
 <v-app class="applogin">
-  <v-card
+
+
+    <v-card
       class="overflow-hidden card"
-      color="purple lighten-1 blue"
-      dark
+
+
       style="width: 450px;margin: auto"
       elevation="22"
       :loading="lading"
@@ -35,7 +37,7 @@
           label="password"
           type="password"
           autofocus="true"
-           outlined
+          outlined
           color="white"
           v-model="password"
           placeholder="password.."
@@ -57,6 +59,11 @@
     </v-card-actions>
 
   </v-card>
+
+
+
+
+
 </v-app>
 
 
@@ -108,11 +115,19 @@ export default {
 main{
   min-height: 0px;
 }
-.applogin{
-background-image: url("../assets/image-440.jpg");
+.img{
+  width: 100%;
+  height: 100%;
+
   background-size: cover;
   background-repeat: no-repeat;
+
 }
+/*.applogin{*/
+/*background-image: url("../assets/image-440.jpg");*/
+/*  background-size: cover;*/
+/*  background-repeat: no-repeat;*/
+/*}*/
   /*.card{*/
   /*  background-image: url("../assets/image-440.jpg");*/
   /*  background-size: cover;*/

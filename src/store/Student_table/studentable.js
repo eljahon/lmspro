@@ -1,16 +1,25 @@
 import  server from '../../service/axios_init.js'
 export  default {
     state:{
-        studentable:{}
+        studentable:{},
+        userbool:null,
     },
     getters:{
         studentinfo: state=>{
             return state.studentable
+        },
+        studenterr:state=>{
+            return state.userbool
         }
     },
     mutations:{
         STUDENTDATE(state ,payload){
             state.studentable=payload;
+        },
+        USERHAVEORNO(state,payload){
+
+            state.userbool=payload;
+
         }
     },
     actions:{
@@ -75,5 +84,19 @@ export  default {
         //             })
         //     })
         // }
+        getLoginaAuht({commit },val){
+            return new Promise((resolve, reject) => {
+                server.get("/v1/username_check?",val)
+                    .then(res=>{
+                        console.log(res);
+                            resolve();
+                            commit("USERHAVEORNO",res.body)
+                        })
+                    .catch(err=>{
+                        console.log(err)
+                        reject();
+                    })
+            })
+        }
     }
 }

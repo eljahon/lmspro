@@ -13,7 +13,8 @@ export default {
 
         SUBJECTLIST(state, payload) {
             state.subjectslist = payload;
-        }
+        },
+
     },
     actions: {
         getSubjectList({commit}) {
@@ -71,7 +72,8 @@ export default {
                            reject()
                        })
             })
-        }
+        },
+
 
     }
 }
