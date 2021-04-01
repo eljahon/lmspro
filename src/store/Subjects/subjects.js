@@ -22,9 +22,7 @@ export default {
                 let learningCentreIds = localStorage.getItem("learningCentresid")
                 server.get("/v1/admin/learning-centre/subject?" + learningCentreIds)
                     .then(res => {
-
                         commit("SUBJECTLIST", res.body)
-                        console.log(res)
                         resolve();
                     })
                     .catch(err => {

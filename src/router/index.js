@@ -31,13 +31,13 @@ const routes = [
         meta: {public: false},
         beforeEnter: routerGuard
     },
-    {
-        path: '/portal',
-        name: 'portal',
-        component: () => import('../views/portal'),
-        meta: {public: false},
-        beforeEnter: routerGuard
-    },
+    // {
+    //     path: '/portal',
+    //     name: 'portal',
+    //     component: () => import('../views/portal'),
+    //     meta: {public: false},
+    //     beforeEnter: routerGuard
+    // },
     {
         path: '/question',
         name: 'question',

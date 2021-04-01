@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from "@/router";
 // import basic from "./requests"
 const SEVER_HOST = "https://lmspro-uz.herokuapp.com/api"
 function ErrorHandler(error) {
@@ -11,7 +12,7 @@ function ErrorHandler(error) {
         switch (_error.status) {
             case 400: alert('Bad request')
                 break
-            case 401: alert('Unauthorized')
+            case 401:router.push('/login')
                 break
             case 403: alert('Forbidden')
                 break

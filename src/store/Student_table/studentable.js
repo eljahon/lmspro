@@ -3,6 +3,13 @@ export  default {
     state:{
         studentable:{},
         userbool:null,
+        finishday: [{state: "MONDAY"}, {state: "TUESDAY"}, {state: "WEDNESDAY"},
+            {state: "THURSDAY"}, {state: "FRIDAY"}, {state: "SATURDAY"}, {state: "SUNDAY"}],
+        Level: [
+            {state: "Beginner", id: 1},
+            {state: "Advanced", id: 2},
+
+        ]
     },
     getters:{
         studentinfo: state=>{
@@ -10,6 +17,11 @@ export  default {
         },
         studenterr:state=>{
             return state.userbool
+        },thistoday:state=>{
+            return state.finishday
+        },
+        thislevel: state=>{
+            return state.Level
         }
     },
     mutations:{
@@ -33,7 +45,7 @@ export  default {
                     {marketplaceIds:localstoreginside.marketplaceIds,
                     learningCentreIds:localstoreginside.learningCentreIds})
                     .then(res=>{
-                        console.log(res)
+
                         resolve();
                         commit("STUDENTDATE",res.body.list);
                         })
@@ -47,7 +59,7 @@ export  default {
             return new Promise((resolve, reject) => {
                 server.post("/v1/admin/learning-centre/student",payload)
                     .then(res=>{
-                        console.log(res);
+
                         resolve();
                         dispatch("getStudentList")
                     })

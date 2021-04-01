@@ -43,13 +43,14 @@
             :headers="headers"
             :items="teacherinfo"
             :search="search"
+            show-select
         >
-          <template v-slot:item.chexbox="{ item }">
-            <v-simple-checkbox
-                v-model="item.chexbox"
-                color="red"
-            ></v-simple-checkbox>
-          </template>
+<!--          <template v-slot:item.chexbox="{ item }">-->
+<!--            <v-simple-checkbox-->
+<!--                v-model="item.chexbox"-->
+<!--                color="red"-->
+<!--            ></v-simple-checkbox>-->
+<!--          </template>-->
           <template v-slot:item.Avatar="{ item }">
             <v-avatar
                 v-model="item.Avatar"
@@ -113,18 +114,24 @@ export default {
   components:{ Dialog,NewTeacherAdd},
 data:()=>{
   return {
+    promisedTimeSlots:[],
+    subjectsWithLevel:[],
     lastname:'',
+    firstname:'',
+    login:'',
+    password:'',
     losder:true,
     search: '',
     img:IMG,
     headers: [
 
-      {text:'chexbox',value:'chexbox',chexbox:true},
+      // {text:'chexbox',value:'chexbox',chexbox:true},
       { text: 'Avatar', value: 'Avatar',chexbox:true },
       { text: 'Firsname', value: 'firstName',chexbox:true },
       { text: 'Lastname', value: 'lastName' ,chexbox:true},
       { text: 'Username', value: 'username',chexbox:true },
-      { text: 'subjects', value: 'subjects[0].name' },
+      { text: 'subjects1', value: 'subjects[0].name' },
+      // { text: 'subjects2', value: 'subjects[1].name' },
        {text:'Status', value:"Status",chexbox:true},
        {text:'Result',value:'Result',chexbox:true},
        {text:'Ations',value:'actions',chexbox:true},

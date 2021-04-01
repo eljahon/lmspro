@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
 import PortalVue from 'portal-vue'
+import VueGeolocation from 'vue-browser-geolocation';
+Vue.use(VueGeolocation);
 
 Vue.use(PortalVue)
 
