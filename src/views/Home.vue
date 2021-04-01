@@ -3,8 +3,9 @@
   <v-app>
     <Dialog v-if="losder" />
 
-   <v-row>
-     <v-col cols="4"> <template>
+   <v-row no-gutters>
+     <v-col xml:space="12"   sm="12"
+            md="4"> <template>
        <v-card
            class="mt-4 mx-auto"
            max-width="400"
@@ -42,7 +43,8 @@
          </v-card-text>
        </v-card>
      </template></v-col>
-     <v-col cols="4"> <template>
+     <v-col xml:space="12"   sm="12"
+            md="4"> <template>
        <v-card
            class="mt-4 mx-auto"
            max-width="400"
@@ -80,7 +82,8 @@
          </v-card-text>
        </v-card>
      </template></v-col>
-     <v-col cols="4" > <template>
+     <v-col xml:space="12" sm="12"
+            md="4"> <template>
        <v-card
            class="mt-4 mx-auto"
            max-width="400"
@@ -119,12 +122,16 @@
        </v-card>
      </template></v-col>
    </v-row>
-    <v-row>
-      <v-col cols="4"></v-col>
-<!--      <v-col cols="5"><v-sheet><Map></Map></v-sheet></v-col>-->
-      <v-col cols="6"
+    <v-row no-gutters>
+      <v-col cols="2"></v-col>
+
+      <v-col cols="8"
       class="mt-10"
-      ><v-sheet><Map></Map></v-sheet></v-col>
+      >
+       <v-sheet>
+         <Map style="margin-top: -20px" />
+       </v-sheet>
+      </v-col>
       <v-col cols="2"></v-col>
     </v-row>
     </v-app>

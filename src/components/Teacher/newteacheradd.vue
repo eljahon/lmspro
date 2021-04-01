@@ -541,11 +541,24 @@ export default {
       }
       console.log(newteacher)
 
-        this.$store.dispatch("createTeacher", newteacher)
-            .finally(() => {
-              this.loading = !this.loading;
-              this.open = !this.open;
-            })
+
+       if (
+           newteacher.firstName!==""
+           &&newteacher.lastName!==""
+           &&newteacher.learningCentreId!==0&&
+           newteacher.promisedtimeSlots!==[]&&
+           newteacher.subjectIds!==[]&&
+           newteacher.username!==""){
+         this.$store.dispatch("createTeacher", newteacher)
+             .finally(() => {
+               this.loading = !this.loading;
+               this.open = !this.open;
+             })
+
+       }
+       else{
+         alert("siz malumaotlarning ixtiyori bitasini to'ldirmadingiz")
+       }
 
 
     },

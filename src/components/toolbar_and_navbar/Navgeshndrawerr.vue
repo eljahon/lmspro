@@ -3,9 +3,9 @@
     <v-navigation-drawer
         app :floating="true"
         :mini-variant="navbar_appbar"
-        color="purple darken-1"
+        color="indigo"
         class="navbar"
-       :permanent="true"
+
 
     >
       <v-list-item>

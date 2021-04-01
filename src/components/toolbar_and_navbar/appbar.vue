@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <v-app-bar :clipped-left="false" :app="true" :fixed="true" color="purple darken-1" dark class="appbar">
+    <v-app-bar :clipped-left="false" :app="true" :fixed="true" color="indigo" dark class="appbar">
       <v-btn @click="toggleDrawer" plain>      <v-icon >
         {{ navbar_appbar ? "mdi-format-indent-increase" : "mdi-format-indent-decrease" }}
       </v-icon>
