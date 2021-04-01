@@ -26,7 +26,7 @@
 
       <v-text-field
           outlined
-          label="login"
+          label="username"
           color="white"
           v-model="login"
           placeholder="user..."
