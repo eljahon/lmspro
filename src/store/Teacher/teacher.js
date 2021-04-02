@@ -18,8 +18,8 @@ export  default {
                 let marketplaceId=localStorage.getItem("marketplaceId");
                 server.get("/v1/admin/learning-centre/teacher?"+marketplaceId)
                     .then(res => {
-                        console.log(res)
-                        console.log(res.body.list)
+
+
                         commit("TEACHERINFO", res.body.list);
                         resolve();
                        })

@@ -97,7 +97,7 @@ export default {
       this.$store.dispatch("authenticate", login, sendtoken)
           .then(res=>{
             console.log(res)
-            this.$router.push('/home')
+            this.$router.push('/')
           })
           .finally(() => {
             // enable

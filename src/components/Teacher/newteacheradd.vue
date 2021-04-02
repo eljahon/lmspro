@@ -594,7 +594,7 @@ open(){
       let user = {
         username: val
       }
-      console.log(user.username);
+
       this.$store.dispatch("getLoginaAuht", user)
     },
 

@@ -73,7 +73,7 @@ export  default {
             return new Promise((resolve, reject) => {
                 server.remove("/v1/admin/learning-centre/student/"+payload)
                     .then(res=>{
-                        console.log(res)
+
                         resolve();
                         dispatch("getStudentList");
                        })
@@ -100,7 +100,7 @@ export  default {
             return new Promise((resolve, reject) => {
                 server.get("/v1/username_check?",val)
                     .then(res=>{
-                        console.log(res);
+
                             resolve();
                             commit("USERHAVEORNO",res.body)
                         })

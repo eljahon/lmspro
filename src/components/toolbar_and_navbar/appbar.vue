@@ -23,7 +23,7 @@
 
         <template>
           <div class="text-center">
-            <v-menu offset-y>
+            <v-menu >
 
               <template v-slot:activator="{ on, attrs }">
                 <v-btn

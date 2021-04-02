@@ -176,7 +176,7 @@
                     <v-list>
                       <v-list-item>
                         <v-list-item-title>
-                          <v-btn plain @click="roominfodialog()">
+                          <v-btn plain @click="studentinfodialog()">
                             <v-icon>mdi-information
                             </v-icon>
                           </v-btn>
@@ -208,8 +208,10 @@
           </tbody>
         </template>
       </v-simple-table>
+      <Studentinfo res="infostudent"/>
       <Newstudentadd ref="studenaddcomponents"></Newstudentadd>
       <Updatestudent ref="updatestudent"/>
+
 
     </v-sheet>
   </v-app>
@@ -220,10 +222,11 @@ import  Dialog from '../../components/loadeng/loadeng'
 import Newstudentadd from '../../components/Studentcomponents/newstudentadddialog'
 import  {mapActions,mapGetters} from 'vuex'
 import Updatestudent from '../../components/Studentcomponents/updatestudent'
+import Studentinfo from '../../components/Studentcomponents/Studentinfo'
 
 export default {
   name: "Students",
-  components:{ Dialog ,Newstudentadd ,Updatestudent},
+  components:{ Dialog ,Newstudentadd ,Updatestudent,Studentinfo},
   data() {
     return {
       search:false,
@@ -258,6 +261,11 @@ export default {
     updatestudent(index){
       console.log(index)
       this.$refs.updatestudent.opendialog(index)
+    },
+    studentinfodialog(){
+      console.log("hello")
+      this.$refs.infostudent.toploader()
+
     }
 
   },

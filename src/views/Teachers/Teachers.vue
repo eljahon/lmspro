@@ -144,12 +144,11 @@ data:()=>{
     ...mapActions(["getListTeacher"]),
     editItem(index,firsname,lastname, promisedTimeSlots,username){
       this.lastname=this.teacherinfo[index]
-      console.log(index,firsname,lastname,promisedTimeSlots,username)
-      console.log(this.lastname)
+
     },
     deleteItem(id){
       this.losder=!this.losder;
-      console.log(id)
+
       this.$store.dispatch("removeTeacher",id)
       .finally(()=>{
         this.losder=!this.losder;
@@ -173,7 +172,7 @@ data:()=>{
   },1000)
   },
   updated() {
-    console.log(this.teacherinfo)
+
   }
 }
 </script>

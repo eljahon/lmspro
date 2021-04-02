@@ -8,7 +8,7 @@ export default {
     getters: {
 
         roominfo: state => {
-            console.log(state.roominfo)
+        
             return state.roominfo;
         }
     },

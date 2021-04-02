@@ -189,7 +189,7 @@
                   <v-list>
                     <v-list-item>
                       <v-list-item-title>
-                        <v-btn plain @click="roominfodialog()">
+                        <v-btn plain @click="roominfodialog(item.address,item.range)">
                           <v-icon>mdi-information
                           </v-icon>
                         </v-btn>
@@ -286,9 +286,9 @@ export default {
       this.$refs.room_update.show()
       this.$refs.room_update.updateRoom(index, id)
     },
-    roominfodialog() {
+    roominfodialog(index,id ) {
 
-      this.$refs.roominfo.shov()
+      this.$refs.roominfo.shov(index,id )
     },
     roomsinfodata() {
       this.loader = true;
