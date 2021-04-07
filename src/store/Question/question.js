@@ -1,5 +1,6 @@
 import server from '../../service/axios_init.js'
-
+import login from "@/store/Login/login";
+import LoginPage from "@/views/LoginPage";
 
 export default {
     state: {
@@ -11,7 +12,7 @@ export default {
     },
     mutations: {
 
-        SUBJECTLIST(state, payload) {
+        QUESTION(state, payload) {
             state.subjectslist = payload;
         },
 
@@ -20,11 +21,10 @@ export default {
         getSubjectList({commit}) {
             return new Promise((resolve, reject) => {
                 let learningCentreIds = localStorage.getItem("learningCentresid")
-                server.get("/v1/admin/learning-centre/subject?" + learningCentreIds)
+                server.get("/v1/admin/questions/listing?" + learningCentreIds)
                     .then(res => {
-                        commit("SUBJECTLIST", res.body)
-
-
+                        commit("QUESTION", res.body)
+                        console.log(res.body)
                         resolve();
                     })
                     .catch(err => {
@@ -46,31 +46,31 @@ export default {
                     })
             })
         },
-        updateSubject({dispatch},payload){
-            return new Promise((resolve, reject) => {
-                server.put("/v1/admin/learning-centre/subject/"+payload.id,payload.subjectCreateDTO)
-                      .then(res=>{
-                          console.log(res)
-                          resolve();
-                          dispatch("getSubjectList")
-                      })
-                      .catch(err=>{
-                          console.log(err)
-                          reject();
-                      })
-            })
-        },
+        // updateSubject({dispatch},id){
+        //     return new Promise((resolve, reject) => {
+        //         server.put("")
+        //               .then(res=>{
+        //                   console.log(res)
+        //                   resolve();
+        //                   dispatch("getSubjectList")
+        //               })
+        //               .catch(err=>{
+        //                   console.log(err)
+        //                   reject();
+        //               })
+        //     })
+        // },
         createSubjectAdd(state,payload){
             return new Promise((resolve, reject) => {
                 server.post("/v1/admin/learning-centre/subject",payload)
-                        .then(res=>{
-                            console.log(res)
-                            resolve()
-                        })
-                       .catch(err=>{
-                           console.log(err)
-                           reject()
-                       })
+                    .then(res=>{
+                        console.log(res)
+                        resolve()
+                    })
+                    .catch(err=>{
+                        console.log(err)
+                        reject()
+                    })
             })
         },
 

@@ -79,11 +79,7 @@
             <v-icon
               color ="indigo darken-4"
                 class="mr-2"
-                @click="editItem(item.id,
-                item.firstName,
-                item.lastName,
-                item.promisedTimeSlots,
-                item.username)"
+                @click="editItem(item)"
             >
               mdi-pencil
             </v-icon>
@@ -142,8 +138,9 @@ data:()=>{
 },
   methods:{
     ...mapActions(["getListTeacher"]),
-    editItem(index,firsname,lastname, promisedTimeSlots,username){
-      this.lastname=this.teacherinfo[index]
+    editItem(item){
+      this.$refs.teacher.updetteacheropen(item)
+
 
     },
     deleteItem(id){

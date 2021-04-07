@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '../views/dashbord.vue'
 import LoginPage from "@/views/LoginPage";
 import routerGuard from "@/service/routerGuard";
 import routerGouardTokennot from "@/service/routerGouardTokennot";
@@ -31,20 +31,16 @@ const routes = [
         meta: {public: false},
         beforeEnter: routerGuard
     },
-    // {
-    //     path: '/portal',
-    //     name: 'portal',
-    //     component: () => import('../views/portal'),
-    //     meta: {public: false},
-    //     beforeEnter: routerGuard
-    // },
+  
     {
-        path: '/question',
+        path: '/question/main',
         name: 'question',
-        component: () => import('../views/mainmenu/mainmenu.vue'),
+        component: () => import('../views/Questions/question.vue'),
         meta: {
             public: false
         },
+       
+
         beforeEnter: routerGuard
 
     },

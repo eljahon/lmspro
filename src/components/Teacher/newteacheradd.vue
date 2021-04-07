@@ -13,7 +13,10 @@
             <v-card-title class="title">
               <v-row>
                 <v-col cols="1"></v-col>
-                <v-col cols="10"><span class="headline">New Teacher Add vue components</span>
+                <v-col cols="10"><span class="headline">
+                  {{text ? "New Teacher Add vue components"
+                    :
+                    "update teacher now component" }}</span>
                 </v-col>
                 <v-col cols="1">
               <span style="float: right"
@@ -52,7 +55,8 @@
                   </v-row>
                   <v-row class="mt-5" v-if="true">
                     <v-col cols="1"></v-col>
-                    <!--                  username-->
+                    <!--
+                    -->
                     <v-col cols="5">
                       <v-text-field
                           :error="studenterr"
@@ -62,7 +66,7 @@
                           dense
                           :rules="validations.userlogin"
                           v-model="login"
-                          @change="userauht"
+                          @change="userauht(login)"
                       ></v-text-field>
                     </v-col>
                     <!--                  password-->
@@ -402,7 +406,7 @@ export default {
         ]
       },
 
-
+      text:null,
       comment: '',
       beginselectday: '',
       finishmenu: false,
@@ -416,7 +420,7 @@ export default {
       log: false,
       login: '',
       Retry_password: '',
-      username: '',
+      password: '',
       lastname: '',
       firstname: '',
       number: '',
@@ -507,7 +511,7 @@ export default {
     },
 
     teachercreate() {
-      this.loading = !this.loading
+      // this.loading = !this.loading
       this.$refs.form.validate(valid => {
         console.log('Valid FORM:', valid)
       })
@@ -534,10 +538,10 @@ export default {
         firstName: this.firstname,
         lastName: this.lastname,
         learningCentreId: localStorage.getItem("learningCentresid"),
-        password: this.username,
+        password: this.password,
         promisedtimeSlots: filteredTimeSlots,
         subjectIds:setNewArray,
-        username: this.login
+        password: this.login
       }
       console.log(newteacher)
 
@@ -548,7 +552,7 @@ export default {
            &&newteacher.learningCentreId!==0&&
            newteacher.promisedtimeSlots!==[]&&
            newteacher.subjectIds!==[]&&
-           newteacher.username!==""){
+           newteacher.password!==""){
          this.$store.dispatch("createTeacher", newteacher)
              .finally(() => {
                this.loading = !this.loading;
@@ -569,7 +573,7 @@ export default {
       this.begintime = null;
       this.lastname = "";
       this.firstname = "";
-      this.username = '';
+      this.password = '';
       this.beginday.state = '';
       this.finishday.state = '';
       this.level = '';
@@ -577,27 +581,48 @@ export default {
       this.Retry_password = "";
       this.subjectitems.state = '';
     },
-
     finish(finish) {
       console.log(finish)
-
     },
 open(){
+      this.text=true;
       this.opendialogteacher=!this.opendialogteacher
 },
+    updetteacheropen(data){
+      this.text=false
+      this.opendialogteacher=!this.opendialogteacher
+      console.log(data)
+      this.firstname=data.firstName
+      this.lastname=data.lastName
+      this.promisedtimeSlots = data.promisedTimeSlots.map(e => {
+        return {
+          startDateModal: false,
+          endDateModal: false,
+          begin: (e.beginHour.toString().length === 1 ? ('0' + e.beginHour.toString()) : e.beginHour.toString()) + ':'
+              + (e.beginMinute.toString().length === 1 ? ('0' + e.beginMinute.toString()) : e.beginMinute.toString()),
+          finish: (e.finishHour.toString().length === 1 ? ('0' + e.finishHour.toString()) : e.finishHour.toString()) + ':'
+              + (e.finishMinute.toString().length === 1 ? ('0' + e.finishMinute.toString()) : e.finishMinute.toString()),
+          beginDay: e.beginDay,
+          finishDay: e.finishDay
+        }
+      });
+      this.subjectsWithLevel=data.subjects.map(e=>{
+        return {
+          subjectId:e.subjectId,
+        }
+      })
+    },
     deletsubject(index) {
-      console.log("salom")
       this.subjectsWithLevel.splice(index, 1);
       this.diseble = false;
     },
-    userauht(val) {
-      let user = {
-        username: val
-      }
-
-      this.$store.dispatch("getLoginaAuht", user)
-    },
-
+    // userauht(val) {
+    //   let user = {
+    //     password: val
+    //   }
+    //
+    //   this.$store.dispatch("getLoginaAuht", user)
+    // },
     opendialog() {
       this.open = true;
     },
@@ -611,8 +636,6 @@ open(){
   mounted() {
     this.getSubjectList()
   },
-
-
   computed: {
     ...mapGetters(["subjectlistname", 'studenterr', 'thistoday', 'thislevel'])
   },
@@ -626,6 +649,7 @@ open(){
     // },
 
   }
+
 
 
 }

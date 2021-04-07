@@ -22,7 +22,7 @@
       <v-divider></v-divider>
       <v-list dense nav>
         <v-list-item
-            v-for="item in items"
+            v-for="item in dashbordtext"
             :key="item.title"
             link
             router :to="item.router"
@@ -40,11 +40,11 @@
       </v-list>
     </v-navigation-drawer>
 
-
+<transition name="slide" mode="out-in">
     <v-main class="mainruoter">
-      <router-view/>
+      <router-view :key="$route.path"/>
     </v-main>
-
+</transition>
   </v-app>
 </template>
 
@@ -58,24 +58,12 @@ export default {
 
   data() {
     return {
-      items: [
-        {title: 'Dashboard', icon: 'mdi-view-dashboard', router: '/'},
-        {title: 'Student', icon: 'mdi-account-tie', router: '/Students',},
-        {title: 'Teachers', icon: 'mdi-account-tie-voice', router: '/Teachers'},
-        {title: 'Rooms', icon: 'mdi-cellphone-link', router: '/Rooms'},
-        {title: 'Subjects', icon: 'mdi-book-open-variant', router: '/Subjects'},
-        {title: 'Student Gurup', icon: 'mdi-account-multiple', router: '/StudentGrups'},
-        {title: 'Time Table', icon: 'mdi-clock-time-eight-outline', router: '/TimeTable'},
-        {title:'Admins',icon:'mdi-account',router:'/admins'},
-        {title: 'Question', icon: 'mdi-head-question-outline', router: '/question'},
 
-
-      ],
       right: null,
     }
   },
   computed: {
-    ...mapGetters(['navbar_appbar'])
+    ...mapGetters(['navbar_appbar',"dashbordtext"])
   },
   mounted() {
     const token = localStorage.getItem("token")
@@ -129,5 +117,15 @@ export default {
 
   /*width: 100%;*/
 }
+.slide-enter-active,
+.slide-leave-active {
+  transition:opacity 1s , transform 1s;
+}
+.slide-enter,
+.slide-leave-to
+{
+  opacity: 0;
+  transform: translateX(-30%);
 
+}
 </style>

@@ -25,7 +25,7 @@
     <v-card-text>
 
       <v-text-field
-          outlined
+
           label="username"
           color="white"
           v-model="login"
@@ -37,7 +37,7 @@
           label="password"
           type="password"
           autofocus="true"
-          outlined
+
           color="white"
           v-model="password"
           placeholder="password.."

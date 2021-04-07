@@ -47,6 +47,7 @@ export  default {
                     .then(res=>{
 
                         resolve();
+
                         commit("STUDENTDATE",res.body.list);
                         })
                     .catch(err=>{
@@ -83,19 +84,19 @@ export  default {
                     })
             })
         },
-        // updateStudent({dispatch},payload){
-        //     return new Promise((resolve, reject) => {
-        //         server.put("")
-        //             .then(res=>{
-        //                   console.log(res);
-        //                   resolve();
-        //                })
-        //             .catch(err=>{
-        //                 console.log(err);
-        //                 reject();
-        //             })
-        //     })
-        // }
+        updateStudent({dispatch},payload){
+            return new Promise((resolve, reject) => {
+                server.put("")
+                    .then(res=>{
+                          console.log(res);
+                          resolve();
+                       })
+                    .catch(err=>{
+                        console.log(err);
+                        reject();
+                    })
+            })
+        },
         getLoginaAuht({commit },val){
             return new Promise((resolve, reject) => {
                 server.get("/v1/username_check?",val)

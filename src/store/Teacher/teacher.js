@@ -14,6 +14,7 @@ export  default {
     },
     actions:{
         getListTeacher( {commit} ){
+
             return new Promise((resolve, reject) => {
                 let marketplaceId=localStorage.getItem("marketplaceId");
                 server.get("/v1/admin/learning-centre/teacher?"+marketplaceId)

@@ -10,7 +10,7 @@
           <v-col cols="4">
             <v-tooltip bottom color="purple accent-1">
               <template v-slot:activator="{ on, attrs }">
-                <!--      app-bar inside search function button  -->
+
                 <v-btn bottomcolor="purple"
                        dark
                        plain
@@ -18,7 +18,7 @@
                        v-on="on"
 
                 >
-                 <v-icon>mdi-bell-alert-outline</v-icon>
+                  <v-icon>mdi-bell-alert-outline</v-icon>
                 </v-btn>
               </template>
               <span>Notifications</span>
@@ -49,7 +49,7 @@
       <v-card style="margin-top: 25px;">
         <v-card-title>
 
-<!--          <v-spacer></v-spacer>-->
+          <!--          <v-spacer></v-spacer>-->
           <v-text-field
               v-model="search"
               append-icon="mdi-magnify"
@@ -62,6 +62,7 @@
             :headers="headers"
             :items="subjectlistname"
             :search="search"
+            :item-key="index"
         >
 
 
@@ -73,14 +74,14 @@
           </template>
           <template v-slot:item.Actions="{ item }">
             <v-icon
-                 color="deep-purple"
+                color="deep-purple"
                 class="mr-2"
-                @click="editItem(item.subjectId)"
+                @click="editItem( item.name,item.subjectId)"
             >
               mdi-pencil
             </v-icon>
             <v-icon
-               color="purple"
+                color="purple"
                 @click="deleteItem(item.subjectId)"
             >
               mdi-delete
@@ -95,13 +96,13 @@
             </v-btn>
           </template>
           <template v-slot:item.subjectId="{ item }">
-            <v-chip v-model="item.subjectId"  color="red" >
-   100%
+            <v-chip v-model="item.subjectId" color="red">
+              100%
             </v-chip>
-            </template>
+          </template>
 
           <template v-slot:item.text="{ item }">
-            <v-chip v-model="item.text"  color="purple accent-4" >
+            <v-chip v-model="item.text" color="purple accent-4">
               subjects
             </v-chip>
           </template>
@@ -110,8 +111,8 @@
     </template>
 
 
-<Subjectdialog ref="title" />
-    <Updatesubject ref="updetcomponents" />
+    <Subjectdialog ref="title"/>
+    <Updatesubject ref="updetcomponents"/>
   </v-sheet>
 </template>
 
@@ -122,7 +123,7 @@ import Subjectdialog from "@/components/Subjectcomponents/subjectdialog";
 import Updatesubject from "@/components/Subjectcomponents/subjectupdatedilog"
 
 export default {
-  components: {Dialog ,Subjectdialog,Updatesubject},
+  components: {Dialog, Subjectdialog, Updatesubject},
   data() {
     return {
       search: '',
@@ -135,14 +136,15 @@ export default {
           sortable: false,
           value: 'chexbox',
         },
-        { text: 'Calories', value: 'name' },
-        { text: 'subjectId', value: 'subjectId' },
-        { text:"text", value: 'text' },
-        { text: "", value: 'protein' },
-        { text: 'Ations', value: 'Actions' },
+        {text: 'Calories', value: 'name'},
+        {text: 'subjectId', value: 'subjectId'},
+        {text: "text", value: 'text'},
+        {text: "", value: 'protein'},
+        {text: 'Ations', value: 'Actions'},
       ],
 
     }
+
   },
   computed: {
     ...mapGetters(["subjectlistname"]),
@@ -173,37 +175,41 @@ export default {
 
   },
   methods: {
-    editItem(id){
-      console.log(id)
+    editItem (index,id) {
+      this.$refs.updetcomponents.openupdatedialog(index,id)
     },
-    filterOnlyCapsText(value, search, ) {
+
+    subjectupdatename() {
+
+    },
+    filterOnlyCapsText(value, search,) {
       return value != null &&
           search != null &&
           typeof value === 'string' &&
           value.toString().toLocaleLowerCase().indexOf(search) !== -1
     },
     ...mapActions(["getSubjectList"]),
-    deleteItem(id){
-      this.losder=!this.losder
+    deleteItem(id) {
+      this.losder = !this.losder
       console.log(id);
-      this.$store.dispatch("removeSubject",id)
-      .finally(()=>{
-        this.losder=!this.losder
-        this.getSubjectList()
-      })
+      this.$store.dispatch("removeSubject", id)
+          .finally(() => {
+            this.losder = !this.losder
+            this.getSubjectList()
+          })
     },
-    opendialogsmall(){
+    opendialogsmall() {
       this.$refs.title.dialogopen()
     },
-    subjectinfo(){
-      this.losder=!this.losder
+    subjectinfo() {
+      this.losder = !this.losder
       this.getSubjectList()
-      .finally(()=>{
-        this.losder=!this.losder
+          .finally(() => {
+            this.losder = !this.losder
 
-      })
+          })
     },
-    dialogopenupdet(index){
+    dialogopenupdet(index) {
       console.log(index)
       this.$refs.updetcomponents.openupdatedialog(index)
     }
@@ -218,7 +224,6 @@ export default {
     }, 1000)
   },
   updated() {
-
 
 
   }

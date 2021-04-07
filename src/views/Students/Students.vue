@@ -1,7 +1,7 @@
 <template>
   <v-app>
 
-    <v-sheet max-height="700" >
+    <v-sheet max-height="700">
       <Dialog v-if="loader"/>
       <portal to="student">
         <div>
@@ -65,19 +65,19 @@
         </div>
       </portal>
       <v-text-field
-                    style="position: absolute;
+          style="position: absolute;
                     top: -40px;width: 100%"
-                    v-if="search"
-                    label="search"
+          v-if="search"
+          label="search"
 
-                    filled
-                    outlined
-                    dense
-                    v-model="input"
+          filled
+          outlined
+          dense
+          v-model="input"
       ></v-text-field>
 
 
-      <v-simple-table dense >
+      <v-simple-table dense>
         <template v-slot:default>
 
           <thead>
@@ -112,10 +112,10 @@
           </thead>
           <tbody>
           <tr
-              v-for="item in searchfilter"
-              :key="item.id"
+              v-for="(item , index ) in searchfilter"
+              :key="index"
           >
-<!--            students inside chexbox -->
+            <!--            students inside chexbox -->
             <td>
               <v-checkbox
 
@@ -134,9 +134,10 @@
             <td>{{ item.lastName }}</td>
             <td>{{ item.username }}</td>
 
-            <td><div v-for="i in item.subjects " :key="i.subjectId">
-              <div style="color:#AB47BC">{{i.subjectId}}.{{i.name}}</div>
-            </div>
+            <td>
+              <div v-for="i in item.subjects " :key="i.subjectId">
+                <div style="color:#AB47BC">{{ i.subjectId }}.{{ i.name }}</div>
+              </div>
             </td>
             <td>
               <v-chip
@@ -144,17 +145,17 @@
                   color="red"
                   text-color="white"
               >
-100%
+                100%
               </v-chip>
             </td>
             <td>
               <v-chip
-                class="ma-2"
-                color="purple darken-4"
-                text-color="white"
-            >
-              hellow i is student
-            </v-chip>
+                  class="ma-2"
+                  color="purple darken-4"
+                  text-color="white"
+              >
+                hellow i is student
+              </v-chip>
             </td>
             <td>
               <template>
@@ -176,7 +177,13 @@
                     <v-list>
                       <v-list-item>
                         <v-list-item-title>
-                          <v-btn plain @click="studentinfodialog()">
+                          <v-btn plain @click="studentinfodialog(
+                              item.firstName,
+                              item.lastName,
+                              item.username,
+                              item.subjects
+
+                          )">
                             <v-icon>mdi-information
                             </v-icon>
                           </v-btn>
@@ -184,7 +191,7 @@
                       </v-list-item>
                       <v-list-item>
                         <v-list-item-title>
-                          <v-btn plain @click="updatestudent(item.id)">
+                          <v-btn plain @click="updatestudent(item)">
                             <v-icon>mdi-pencil-outline</v-icon>
                           </v-btn>
                         </v-list-item-title>
@@ -208,7 +215,7 @@
           </tbody>
         </template>
       </v-simple-table>
-      <Studentinfo res="infostudent"/>
+      <Studentinfo ref="infostudent"/>
       <Newstudentadd ref="studenaddcomponents"></Newstudentadd>
       <Updatestudent ref="updatestudent"/>
 
@@ -218,53 +225,54 @@
 </template>
 
 <script>
-import  Dialog from '../../components/loadeng/loadeng'
+import Dialog from '../../components/loadeng/loadeng'
 import Newstudentadd from '../../components/Studentcomponents/newstudentadddialog'
-import  {mapActions,mapGetters} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 import Updatestudent from '../../components/Studentcomponents/updatestudent'
 import Studentinfo from '../../components/Studentcomponents/Studentinfo'
 
 export default {
   name: "Students",
-  components:{ Dialog ,Newstudentadd ,Updatestudent,Studentinfo},
+  components: {Dialog, Newstudentadd, Updatestudent, Studentinfo},
   data() {
     return {
-      search:false,
+      search: false,
       input: '',
       loader: true,
-      couter:0
+      couter: 0
     }
 
   },
-  methods:{
-    ...mapActions(["getStudentList","getSubjectList"]),
+  methods: {
+    ...mapActions(["getStudentList", "getSubjectList"]),
 
-    LoaderOpenClose(){
-      this.loader=!this.loader
+    LoaderOpenClose() {
+      this.loader = !this.loader
     },
-    dialogopen(){
+    dialogopen() {
       this.$refs.studenaddcomponents.opendialog()
 
 
     },
-    deletstudent(index){
+    deletstudent(index) {
       console.log(index)
 
-      this.loader=!this.loader
-      this.$store.dispatch("removeStudent",index)
-      .finally(()=>{
-        this.loader=!this.loader
-      })
+      this.loader = !this.loader
+      this.$store.dispatch("removeStudent", index)
+          .finally(() => {
+            this.loader = !this.loader
+          })
 
       console.log(index)
     },
-    updatestudent(index){
-      console.log(index)
-      this.$refs.updatestudent.opendialog(index)
+    updatestudent(item) {
+      console.log(item)
+      const _item = { ...item }
+      this.$refs.updatestudent.opendialog(_item)
     },
-    studentinfodialog(){
-      console.log("hello")
-      this.$refs.infostudent.toploader()
+    studentinfodialog(firstname, lastname, username, subject) {
+
+      this.$refs.infostudent.loader(firstname, lastname, username, subject)
 
     }
 
@@ -273,19 +281,20 @@ export default {
     this.getStudentList();
     this.getSubjectList();
   },
-  computed:{
-...mapGetters(["studentinfo"]),
-    searchfilter () {
+  computed: {
+    ...mapGetters(["studentinfo"]),
+    searchfilter() {
       if (this.input === '') return this.studentinfo
       else return this.studentinfo.filter(e => {
         return e.firstName.toUpperCase().startsWith(this.input.trim().toUpperCase())
-      })}
+      })
+    }
 
 
   },
   beforeMount() {
-    setTimeout(()=>{
-      this.loader=!this.loader
+    setTimeout(() => {
+      this.loader = !this.loader
     }, 2000)
   },
   updated() {
