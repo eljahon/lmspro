@@ -54,22 +54,87 @@
                 </v-list-item>
                 <v-divider></v-divider>
                 <v-list-item
-                    v-for="(item, index) in overflow" :key="index">
-                  <v-btn plain @click="logout(index)">
+                 >
+                  <v-btn plain @click="logout()">
                   <v-list-item-title >
-                    {{ item.title }}
+                    Logout  <v-icon>
+                    mdi-arrow-right-bold
+                  </v-icon>
                   </v-list-item-title>
                   </v-btn>
 
-                  <v-icon>
-                    {{ item.icon }}
-                  </v-icon>
+
 
                 </v-list-item>
+                <v-list-item
+                >
+                  <v-btn plain>
+                    <v-list-item-title >
+                    Setting
+                      <v-icon>
+                      mdi-wrench
+                    </v-icon>
+                    </v-list-item-title>
+                  </v-btn>
+
+
+
+                </v-list-item>
+                <v-list-item style="position:relative;left:-75px;top:-10px;">
+                  <v-list-item-title >
+                  <template>
+                    <div class="text-center" >
+                      <v-menu offset-y>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn
+                              plain
+                              color="primary"
+                              dark
+                              v-bind="attrs"
+                              v-on="on"
+
+                          >
+                           <flag iso="us"></flag> Language
+                          </v-btn>
+                        </template>
+                        <v-list>
+                          <v-list-item>
+                           <v-btn plain @click="setLocale('us')">
+                             <v-list-item-title>
+
+                               <flag iso="us"></flag>  English
+                             </v-list-item-title>
+                           </v-btn>
+                          </v-list-item>
+                          <v-list-item>
+                            <v-btn plain @click="setLocale('ru')">
+                              <v-list-item-title>
+
+                                <flag iso="ru"></flag>  Russa
+                              </v-list-item-title>
+                            </v-btn>
+                          </v-list-item>
+                          <v-list-item>
+                            <v-btn plain @click="setLocale('uz')">
+                              <v-list-item-title>
+
+                                <flag iso="uz"></flag>  Uzbek
+                              </v-list-item-title>
+                            </v-btn>
+                            </v-list-item>
+                        </v-list>
+                      </v-menu>
+                    </div>
+                  </template>
+                  </v-list-item-title>
+                </v-list-item>
+
               </v-list>
+
             </v-menu>
           </div>
         </template>
+
       </div>
     </v-app-bar>
   </div>
@@ -95,30 +160,22 @@ export default {
       overflow: [
           {title: 'Logout', icon: 'mdi-arrow-right-bold'},
           {title:"Setting",icon:'mdi-wrench'},
-          { title:'Lange',icon:'mdi-lange'}
+
+
                  ],
       img:Img
 
     }
   },
   methods: {
-    logout(index) {
-      if(index==0){
-        console.log(" men Loginga ketdmi")
+    setLocale(val){
+      this.$i18n.locale=val;
+    },
+    logout() {
       localStorage.removeItem('token')
       localStorage.removeItem('usertoken')
       localStorage.removeItem('learningCentresid')
-      this.$router.push({name: 'Login'})}
-      else{}
-        if(index==1){
-        console.log(" hellow i si own")
-      }
-      else{} if(index==2){
-        console.log(" hellow i is two")
-
-      }
-
-    },
+      this.$router.push({name: 'Login'})},
 
     toggleDrawer() {
       this.$store.dispatch('toggleNavbar');
