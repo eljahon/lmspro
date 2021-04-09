@@ -21,6 +21,7 @@ export default {
                             localStorage.setItem('usertoken', JSON.stringify(usertoken));
 
                         }
+                        console.log(res);
                     })
                     .catch(err=>{
                     console.log(err)
